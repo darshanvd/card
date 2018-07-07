@@ -39,9 +39,9 @@ export class SidebarComponent implements OnInit {
       }, 2000);
     }
     onClickMenuContent(e) {
-      setTimeout(function() {
-        $.app.menu.collapse('hide');
-      }, 2000);
-      console.log("fasdfasdf");
+      // setTimeout(function() {
+      //   // $.app.menu.collapse('hide');
+      // }, 1000);
+      // console.log("fasdfasdf");
     }
 }
