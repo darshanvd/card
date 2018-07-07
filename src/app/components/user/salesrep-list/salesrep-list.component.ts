@@ -101,8 +101,9 @@ export class SalesrepListComponent implements OnDestroy {
       deleteRowButton.addEventHandler('click', () => {
         let selectedrowindex = this.myGrid.getselectedrowindex();
         let rowscount = this.myGrid.getdatainformation().rowscount;
-        if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
-          if (confirm('Are you sure want to delete this selected Sales Rep?')) {
+        // if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
+          if (selectedrowindex >= 0) {
+        if (confirm('Are you sure want to delete this selected Sales Rep?')) {
             this.salesrepService.removeSalesRep(this.selectedSalesRep).then((item) => {
               let id = this.myGrid.getrowid(selectedrowindex);
               this.myGrid.deleterow(id);

@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit {
       this.initLeftSidebar();
     }
     toggleSideBarMenu () {
-      if(window.innerWidth < 768) {
+      if (window.innerWidth < 768) {
         this.broadcaster.broadcast('toggle_sidebar_menu');
       }
     }
@@ -39,9 +39,8 @@ export class SidebarComponent implements OnInit {
       }, 2000);
     }
     onClickMenuContent(e) {
-      setTimeout(function() {
-        $.app.menu.collapse('hide');
-      }, 2000);
-      console.log("fasdfasdf");
+      // setTimeout(function() {
+      //   $.app.menu.collapse('hide');
+      // }, 2000);
     }
 }
