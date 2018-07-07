@@ -1,9 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { Location } from '@angular/common';
+import { Broadcaster } from '../broadcaster';
 
 @Component({
     selector: 'app-navbar',
@@ -16,9 +17,10 @@ export class NavbarComponent implements OnDestroy {
     userName: String = '';
     profilePic: String = '';
     hasProfilePic = false;
+    @ViewChild('toggleSidemenuId') toggleSidemenu: ElementRef;
     private subscription: ISubscription;
     constructor(private afAuth: AngularFireAuth, private router: Router,
-        private location: Location) {
+        private location: Location, private broadcaster: Broadcaster) {
             this.userName = localStorage.getItem('userName');
             if (localStorage.getItem('profilePic') != null) {
                 this.profilePic = localStorage.getItem('profilePic');
@@ -28,7 +30,12 @@ export class NavbarComponent implements OnDestroy {
                 user => {
                     this.userEmail = user.email;
                 }
-            )
+            );
+
+            this.broadcaster.on<any>('toggle_sidebar_menu').subscribe((data) => {
+                let el: HTMLElement = this.toggleSidemenu.nativeElement as HTMLElement;
+                el.click();
+            })
             
     }
 
