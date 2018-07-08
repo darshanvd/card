@@ -40,13 +40,13 @@ export class SalesrepListComponent implements OnDestroy {
 
   columns: any[] =
     [
-      { text: 'Name', datafield: 'name', width: 160, cellbeginedit: this.cellbeginedit },
-      { text: 'Email', datafield: 'email', width: 180, cellbeginedit: this.cellbeginedit },
-      { text: 'Contact No', datafield: 'contactno', width: 100, cellbeginedit: this.cellbeginedit },
-      { text: 'Sign Date', datafield: 'signdate', width: 100, cellbeginedit: this.cellbeginedit, cellsformat: 'yyyy-MM-dd' },
-      { text: 'Country', datafield: 'country', width: 70, cellbeginedit: this.cellbeginedit },
+      { text: 'Name', datafield: 'name', width: 200, cellbeginedit: this.cellbeginedit },
+      { text: 'Email', datafield: 'email', width: 240, cellbeginedit: this.cellbeginedit },
+      { text: 'Contact No', datafield: 'contactno', width: 150, cellbeginedit: this.cellbeginedit },
+      { text: 'Sign Date', datafield: 'signdate', width: 150, cellbeginedit: this.cellbeginedit, cellsformat: 'yyyy-MM-dd' },
+      { text: 'Country', datafield: 'country', width: 120, cellbeginedit: this.cellbeginedit },
       { text: 'Active', datafield: 'paid', width: 50, threestatecheckbox: true, columntype: 'checkbox' },
-      { text: 'percentage', datafield: 'percentage', width: 50 },
+      { text: 'percentage', datafield: 'percentage', width: 80 },
       { text: 'Notes', datafield: 'notes', width: 240 },
     ];
 
@@ -62,10 +62,10 @@ export class SalesrepListComponent implements OnDestroy {
 
   columns2: any[] =
     [
-      { text: 'Business Name', datafield: 'businessName', width: 250, cellbeginedit: this.cellbeginedit },
-      { text: 'Email', datafield: 'email', width: 250, cellbeginedit: this.cellbeginedit },
-      { text: 'State', datafield: 'state', width: 200, cellbeginedit: this.cellbeginedit },
-      { text: 'City', datafield: 'city', width: 150, cellbeginedit: this.cellbeginedit },
+      { text: 'Business Name', datafield: 'businessName', width: 300, cellbeginedit: this.cellbeginedit },
+      { text: 'Email', datafield: 'email', width: 300, cellbeginedit: this.cellbeginedit },
+      { text: 'State', datafield: 'state', width: 250, cellbeginedit: this.cellbeginedit },
+      { text: 'City', datafield: 'city', width: 250, cellbeginedit: this.cellbeginedit },
       { text: 'Paid', datafield: 'paid', width: 80, threestatecheckbox: true, columntype: 'checkbox' },
     ];
 

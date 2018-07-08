@@ -36,7 +36,8 @@
           <div class="card-body card-dashboard ">
             <div id="salesrep_list_grid">
               <div #pagingInfoLog></div>
-              <jqxGrid #myGrid [width]="950" [height]="500" [source]="dataAdapter" [showtoolbar]="true" [rendertoolbar]="rendertoolbar"
+              <jqxGrid #myGrid [width]="'100%'"
+              [height]="'100%'" [source]="dataAdapter" [showtoolbar]="true" [rendertoolbar]="rendertoolbar"
                 [columns]="columns" [filterable]="true" [editable]="true" [showfilterrow]="true" [ready]="ready" (onCellbeginedit)="cellBeginEditEvent($event)"
                 (onCellendedit)="cellEndEditEvent($event)" (onRowselect)="customersGridOnRowSelect($event)" [keyboardnavigation]="false">
               </jqxGrid>
@@ -45,7 +46,8 @@
               <h3>Deal by Vendor</h3>
              
               <br>
-              <jqxGrid #ordersGrid [width]="950" [height]="249" [keyboardnavigation]="false" [showtoolbar]="true" [rendertoolbar]="rendertoolbarvendor"
+              <jqxGrid #ordersGrid [width]="'100%'"
+              [height]="'100%'" [keyboardnavigation]="false" [showtoolbar]="true" [rendertoolbar]="rendertoolbarvendor"
                 [columns]="columns2" [editable]="true" (onCellbeginedit)="cellBeginEditVendorEvent($event)" (onRowselect)="customersGridVendorOnRowSelect($event)" (onCellendedit)="cellEndEditVendorEvent($event)">
               </jqxGrid>
             </div>

@@ -22,13 +22,13 @@
     <div class="col-12">
       <div class="card">
         <div class="card-content collapse show">
-          <div class="card-body card-dashboard ">
+          <div class="card-body card-dashboard collapse show">
             <div id="vendor_list_grid">
                 <div #pagingInfoLog></div>
               <jqxGrid 
                   #myGrid
-                  [width]="1200"
-                  [height]="500"
+                  [width]="'100%'"
+                  [height]="'100%'"
                   [source]="dataAdapter"
                   [showtoolbar]="true"
                   [rendertoolbar]="rendertoolbar"
