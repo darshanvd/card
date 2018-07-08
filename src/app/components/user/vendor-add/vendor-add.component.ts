@@ -153,10 +153,10 @@ export class VendorAddComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute, public cd: ChangeDetectorRef) {
     this.loggedInUserId = localStorage.getItem('userId');
-    if (firebase.apps.length > 1) {
-      firebase.app('Secondary').delete();
-      location.reload();
-    }
+    // if (firebase.apps.length > 1) {
+    //   firebase.app('Secondary').delete();
+    //   location.reload();
+    // }
 
     this.route.queryParams.subscribe(params => {
       this.source = params['source'];

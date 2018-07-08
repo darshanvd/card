@@ -29,6 +29,7 @@ export class SidebarComponent implements OnInit {
     }
     toggleSideBarMenu () {
       if (window.innerWidth < 768) {
+        console.log('test');
         this.broadcaster.broadcast('toggle_sidebar_menu');
       }
     }
