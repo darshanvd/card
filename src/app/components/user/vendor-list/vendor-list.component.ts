@@ -103,7 +103,9 @@ export class VendorListComponent implements OnDestroy {
       deleteRowButton.addEventHandler('click', () => {
         let selectedrowindex = this.myGrid.getselectedrowindex();
         let rowscount = this.myGrid.getdatainformation().rowscount;
-        if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
+        // if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
+        if (selectedrowindex >= 0) {
+
           if (confirm('Are you sure want to delete this selected Vendor ?')) {
 
             let key = this.vendorSelectedRow;
@@ -142,7 +144,8 @@ export class VendorListComponent implements OnDestroy {
       editRowButton.addEventHandler('click', () => {
         let selectedrowindex = this.myGrid.getselectedrowindex();
         let rowscount = this.myGrid.getdatainformation().rowscount;
-        if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
+        // if (selectedrowindex >= 0 && selectedrowindex < parseFloat(rowscount)) {
+          if (selectedrowindex >= 0) {
 
             let key = this.vendorSelectedRow;
             // take vendor from key 
@@ -330,6 +333,7 @@ export class VendorListComponent implements OnDestroy {
   }
 
   customersGridOnRowSelect(event) {
+    debugger;
     let key = event.args.row.key;
     this.vendorSelectedRow = key;
     this.subscription = this.vendorService.getAllSalesRepVendor(key).snapshotChanges().subscribe(data => {
