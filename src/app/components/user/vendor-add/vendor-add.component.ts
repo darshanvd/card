@@ -4,6 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
+import * as atoastr from '../../common/toastr';
 import { } from '@types/googlemaps';
 // declare var autocomplete: any;
 
@@ -27,6 +28,7 @@ export class VendorAddComponent implements OnInit, OnDestroy {
     administrative_area_level_1: 'short_name', // state
     postal_code: 'short_name'                  // zipCode
   };
+  secondaryApp: any;
 
   timeList = [
     {
@@ -151,10 +153,10 @@ export class VendorAddComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute, public cd: ChangeDetectorRef) {
     this.loggedInUserId = localStorage.getItem('userId');
-    if (firebase.apps.length > 1) {
-      firebase.app('Secondary').delete();
-      location.reload();
-    }
+    // if (firebase.apps.length > 1) {
+    //   firebase.app('Secondary').delete();
+    //   location.reload();
+    // }
 
     this.route.queryParams.subscribe(params => {
       this.source = params['source'];
@@ -162,6 +164,16 @@ export class VendorAddComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const config = {
+      apiKey: 'AIzaSyDXFg2G-agmNmslaVOVkbWDIyp7hZVlM7Y',
+      authDomain: 'loycard-f138e.firebaseapp.com',
+      databaseURL: 'https://loycard-f138e.firebaseio.com',
+      projectId: 'loycard-f138e',
+      storageBucket: 'loycard-f138e.appspot.com',
+      messagingSenderId: '562361582837'
+    };
+    const hasSeconday = firebase.apps.filter( app => app.name === 'Secondary');
+    this.secondaryApp = hasSeconday.length ? hasSeconday[0] : firebase.initializeApp(config, 'Secondary');
     // initialize google map's autocomplete
     this.autocomplete = new google.maps.places.Autocomplete(
       <HTMLInputElement>(document.getElementById('businessAddress')),
@@ -214,14 +226,14 @@ export class VendorAddComponent implements OnInit, OnDestroy {
     var that = this;
 
     if (formData.valid) {
-      const config = {
-        apiKey: 'AIzaSyDXFg2G-agmNmslaVOVkbWDIyp7hZVlM7Y',
-        authDomain: 'loycard-f138e.firebaseapp.com',
-        databaseURL: 'https://loycard-f138e.firebaseio.com',
-        projectId: 'loycard-f138e',
-        storageBucket: 'loycard-f138e.appspot.com',
-        messagingSenderId: '562361582837'
-      };
+      // const config = {
+      //   apiKey: 'AIzaSyDXFg2G-agmNmslaVOVkbWDIyp7hZVlM7Y',
+      //   authDomain: 'loycard-f138e.firebaseapp.com',
+      //   databaseURL: 'https://loycard-f138e.firebaseio.com',
+      //   projectId: 'loycard-f138e',
+      //   storageBucket: 'loycard-f138e.appspot.com',
+      //   messagingSenderId: '562361582837'
+      // };
       // console.log(firebase.apps.length);
       var timeListArray = []
       for (var i=0; i < this.timeSlotList.length; i++) {
@@ -235,7 +247,7 @@ export class VendorAddComponent implements OnInit, OnDestroy {
         timeListArray.push(time);
       }
 
-
+      const secondaryApp = this.secondaryApp;
       // var timeListArray = []
       // for (var item of this.timeSlotList) {
       //   var time = {
@@ -248,8 +260,8 @@ export class VendorAddComponent implements OnInit, OnDestroy {
       //   timeListArray.push(time);
       // }
 
-      const hasSeconday = firebase.apps.filter(app => app.name === 'Secondary');
-      let secondaryApp = hasSeconday.length ? hasSeconday[0] : firebase.initializeApp(config, 'Secondary');
+      // const hasSeconday = firebase.apps.filter(app => app.name === 'Secondary');
+      // let secondaryApp = hasSeconday.length ? hasSeconday[0] : firebase.initializeApp(config, 'Secondary');
       secondaryApp.auth().createUserWithEmailAndPassword(formData.value.email, formData.value.password)
         .then((firebaseUser) => {
           localStorage.setItem('insertedVendorEmail', formData.value.email);
@@ -324,6 +336,7 @@ export class VendorAddComponent implements OnInit, OnDestroy {
               secondaryApp.auth().signOut();
               this.router.navigate(['/vendor-card-add']);
             }
+            atoastr.showSuccess('Vendor added successfully');
           }).catch(function (error) {
             console.log("Error updating displayname");
           });
@@ -341,6 +354,8 @@ export class VendorAddComponent implements OnInit, OnDestroy {
             counter = ++this.addVendorCounter;
           }
           localStorage.setItem('addVendorCounter', counter.toString());
+        }).catch(function (error) {
+          atoastr.showError(error.message);
         });
     }
   }

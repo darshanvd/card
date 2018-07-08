@@ -4,6 +4,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
+import * as atoastr from '../../common/toastr';
+
 @Component({
   selector: 'app-salesrep-add',
   templateUrl: './salesrep-add.component.html',
@@ -16,6 +18,7 @@ export class SalesrepAddComponent implements OnInit {
   componentForm = {
     country: 'long_name',                     // country
   };
+  secondaryApp: any;
   constructor(private afAuth: AngularFireAuth,
     private afDb: AngularFireDatabase, private router: Router, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -24,6 +27,18 @@ export class SalesrepAddComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const config = {
+      apiKey: 'AIzaSyDXFg2G-agmNmslaVOVkbWDIyp7hZVlM7Y',
+      authDomain: 'loycard-f138e.firebaseapp.com',
+      databaseURL: 'https://loycard-f138e.firebaseio.com',
+      projectId: 'loycard-f138e',
+      storageBucket: 'loycard-f138e.appspot.com',
+      messagingSenderId: '562361582837'
+    };
+    const hasSeconday = firebase.apps.filter( app => app.name === 'Secondary');
+    this.secondaryApp = hasSeconday.length ? hasSeconday[0] : firebase.initializeApp(config, 'Secondary');
+
     this.autocomplete = new google.maps.places.Autocomplete(
       <HTMLInputElement>(document.getElementById('country')),
       { types: ['(regions)'] });
@@ -59,15 +74,18 @@ export class SalesrepAddComponent implements OnInit {
     console.log("formData", formData,formData.value.email,formData.value.signdate,$('#country').val())
     var that = this;
     if (formData.valid) {
-      const config = {
-        apiKey: 'AIzaSyDXFg2G-agmNmslaVOVkbWDIyp7hZVlM7Y',
-        authDomain: 'loycard-f138e.firebaseapp.com',
-        databaseURL: 'https://loycard-f138e.firebaseio.com',
-        projectId: 'loycard-f138e',
-        storageBucket: 'loycard-f138e.appspot.com',
-        messagingSenderId: '562361582837'
-      };
-      const secondaryApp = firebase.initializeApp(config, 'Secondary');
+      const secondaryApp = this.secondaryApp;
+      let inserted = false;
+      // const config = {
+      //   apiKey: 'AIzaSyDXFg2G-agmNmslaVOVkbWDIyp7hZVlM7Y',
+      //   authDomain: 'loycard-f138e.firebaseapp.com',
+      //   databaseURL: 'https://loycard-f138e.firebaseio.com',
+      //   projectId: 'loycard-f138e',
+      //   storageBucket: 'loycard-f138e.appspot.com',
+      //   messagingSenderId: '562361582837'
+      // };
+      // const hasSeconday = firebase.apps.filter( app => app.name === 'Secondary');
+      // secondaryApp = hasSeconday.length ? hasSeconday[0] : firebase.initializeApp(config, 'Secondary');
       secondaryApp.auth().createUserWithEmailAndPassword(formData.value.email, formData.value.password)
         .then(function (firebaseUser) {
           secondaryApp.database().ref('/Role/' + firebaseUser.uid).update({
@@ -77,6 +95,13 @@ export class SalesrepAddComponent implements OnInit {
             signdate: formData.value.signdate,
             country: $('#country').val(),
             role: 1
+          }).then(function () {
+            // if (that.source == 'salesrep-list') {
+            //   that.router.navigate(['salesrep-list']);
+            // }
+            console.log('DisplayName123 Updated');
+          }).catch(function (error) {
+            console.log('Error updating 123 displayname');
           });
 
           secondaryApp.database().ref('/Representatives/' + firebaseUser.uid).update({
@@ -87,6 +112,11 @@ export class SalesrepAddComponent implements OnInit {
             country: $('#country').val(),
             role: 1,
             uid: firebaseUser.uid
+          }).then(function () {
+           
+            console.log('DisplayName 456Updated');
+          }).catch(function (error) {
+            console.log('Error updating 456displayname');
           });
           firebaseUser.updateProfile({
             displayName: formData.value.name
@@ -94,15 +124,18 @@ export class SalesrepAddComponent implements OnInit {
             if (that.source == 'salesrep-list') {
               that.router.navigate(['salesrep-list']);
             }
-            console.log('DisplayName Updated');
+            atoastr.showSuccess('Sales repo updated');
           }).catch(function (error) {
             console.log('Error updating displayname');
           });
           formData.reset();
           secondaryApp.auth().signOut();
-      console.log("secondaryApp", secondaryApp)
+          inserted = true;
+          console.log("secondaryApp", secondaryApp)
+        }).catch(function (error) {
+          atoastr.showError(error.message);
         });
-      this.inserted = true;
+        this.inserted = inserted;
     }
   }
 
