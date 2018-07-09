@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { Location } from '@angular/common';
-import { Broadcaster } from '../broadcaster';
 
 @Component({
     selector: 'app-navbar',
@@ -20,7 +19,7 @@ export class NavbarComponent implements OnDestroy {
     @ViewChild('toggleSidemenuId') toggleSidemenu: ElementRef;
     private subscription: ISubscription;
     constructor(private afAuth: AngularFireAuth, private router: Router,
-        private location: Location, private broadcaster: Broadcaster) {
+        private location: Location) {
             this.userName = localStorage.getItem('userName');
             if (localStorage.getItem('profilePic') != null) {
                 this.profilePic = localStorage.getItem('profilePic');
@@ -32,14 +31,20 @@ export class NavbarComponent implements OnDestroy {
                 }
             );
 
-            this.broadcaster.on<any>('toggle_sidebar_menu').subscribe((data) => {
-                let el: HTMLElement = this.toggleSidemenu.nativeElement as HTMLElement;
-                el.click();
-            })
+            // this.broadcaster.on<any>('toggle_sidebar_menu').subscribe((data) => {
+            //     $.app.menu.toggle(false);
+            // })
             
     }
 
     logout() {
+        
+        if($("body").hasClass('menu-expanded')){
+            let el: HTMLElement = this.toggleSidemenu.nativeElement as HTMLElement;
+            el.click();
+        }
+        // $('.menu-toggle').removeClass('is-active');
+        // $("body").addClass('vertical-layout vertical-menu fixed-navbar menu-open 2-columns menu-collapsed pace-done pace-done');
         this.afAuth.auth.signOut();
         localStorage.removeItem('userrole');
         localStorage.removeItem('userId');

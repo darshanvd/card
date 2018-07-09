@@ -1,5 +1,5 @@
 <!-- Sidebar Content starts -->
-<div id="stackMenu" (click)="toggleSideBarMenu()" data-scroll-to-active="true" class="main-menu menu-fixed menu-light menu-accordion">
+<div id="stackMenu" data-scroll-to-active="true" class="main-menu menu-fixed menu-light menu-accordion">
     <div class="main-menu-content">
         <ul *ngIf="userRole !=null " id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
             <li class="nav-item" routerLinkActive="active">
@@ -17,11 +17,11 @@
                 </a>
                 <ul class="menu-content" (click)="onClickMenuContent()">
                     <li *ngIf="userRole=='0'" routerLinkActive="active">
-                        <a routerLink="/salesrep-add" class="menu-item">
+                        <a routerLink="/salesrep-add" class="menu-item menu-toggle">
                             <i class="icon-user-follow"></i>Add Sales Rep.</a>
                     </li>
                     <li *ngIf="userRole=='1'" routerLinkActive="active">
-                        <a routerLink="/vendor-add" class="menu-item">
+                        <a routerLink="/vendor-add" class="menu-item menu-toggle">
                             <i class="icon-user-follow"></i>Add Vendor</a>
                     </li>
                     <li *ngIf="userRole=='0'" routerLinkActive="active">

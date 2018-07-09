@@ -37,7 +37,6 @@ import { SubscriptionService } from './components/user/subscription.service';
 import { WeatherService } from './weather.service';
 
 import {MyDatePickerModule} from 'mydatepicker';
-import{ Broadcaster } from './shared/broadcaster';
 
 @NgModule({
     declarations: [
@@ -68,8 +67,7 @@ import{ Broadcaster } from './shared/broadcaster';
         SubscriptionService,
         OfferService,
         PromotionService,
-        WeatherService,
-        Broadcaster
+        WeatherService
     ],
     bootstrap: [AppComponent]
 })
