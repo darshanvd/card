@@ -333,7 +333,6 @@ export class VendorListComponent implements OnDestroy {
   }
 
   customersGridOnRowSelect(event) {
-    debugger;
     let key = event.args.row.key;
     this.vendorSelectedRow = key;
     this.subscription = this.vendorService.getAllSalesRepVendor(key).snapshotChanges().subscribe(data => {

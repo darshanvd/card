@@ -31,3 +31,14 @@
         width: 80% !important;
     }
 }
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  {
+    .col-md-4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 70.33333%;
+        /* flex: 0 0 50.33333%; */
+        max-width: 70%;
+    }
+}

@@ -391,6 +391,9 @@
     },
 
     expand: function() {
+      if(this.expanded === null){
+        this.expanded = false;
+      }
       if (this.expanded === false) {
         if( $body.data('menu') == 'vertical-menu-modern' ){
           $('.modern-nav-toggle').find('.toggle-icon')

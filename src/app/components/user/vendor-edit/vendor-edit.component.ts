@@ -281,6 +281,9 @@ export class VendorEditComponent implements OnInit {
       .then(() => {
         // formData.reset();
         if (this.userRole === '1') {
+          this.updateRepresentativesTable(req);
+
+          this.updateVendorsTable(req);
          // this.updateRepresentativesTable(req);
         } else if (this.userRole === '0') {
           console.log('Cuurent user is admin');

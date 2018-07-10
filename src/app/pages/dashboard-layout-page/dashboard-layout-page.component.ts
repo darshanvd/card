@@ -122,7 +122,9 @@ export class DashboardLayoutPageComponent implements OnInit {
 
     this.afdb.object('/Subscriptions/' + this.userId).valueChanges()
       .subscribe((resp) => {
+        if(resp) {
         this.totalVendorCustomers = Object.keys(resp).length;
+        }
       });
 
     this.afdb.list('/Subscriptions/', ref => ref.orderByChild('key')).valueChanges()
